@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import Homeicon from '../assets/vector.svg'
+import Homeicon from '../assets/Vector.svg'
 import Albums from '../assets/album.svg'
 import Recently from '../assets/fluent-mdl2_recent.svg'
 import Artist from '../assets/artist.svg'
