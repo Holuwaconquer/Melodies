@@ -18,7 +18,8 @@ const Mood = () => {
   
   useEffect(() => {
     const moodList = apiData.flatMap(item => item.mood);
-
+    console.log(moodList);
+    
     const moodCount = moodList.reduce((acc, mood) => {
       acc[mood] = (acc[mood] || 0) + 1;
       return acc;
