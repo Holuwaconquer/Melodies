@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { apiDetails } from '../App';
 import Chill from '../assets/Chill.png'
-import Workout from '../assets/workout.png'
-import Love from '../assets/love.png'
-import Sad from '../assets/sad.png'
+import Workout from '../assets/Workout.png'
+import Love from '../assets/Love.png'
+import Sad from '../assets/Sad.png'
 const Mood = () => {
   const moodImages = {
     Cool: Chill,
