@@ -6,6 +6,7 @@ import axios from 'axios'
 import PlusIcon from '../assets/plus.png'
 import { useNavigate } from 'react-router-dom'
 import PopularArtist from '../Components/PopularArtist'
+import Topnav from '../Components/Topnav'
 
 const Home = ({apiData, isLoading, setIsPlaying, isPlaying, setCurrentTrack, currentTrack}) => {
     let navigate = useNavigate()
@@ -19,19 +20,19 @@ const Home = ({apiData, isLoading, setIsPlaying, isPlaying, setCurrentTrack, cur
         .slice(0, 20);
         setTrendMusic(filtered)
         setShowViewAllBtn(filtered.length > 7)
-        // console.log(trendMusic);
     }, [apiData])
     
 
     const seemore = () => {
-        setTrendNum(15)
+        navigate('/trending-page', {state: {trendMusic} })
     }
 
   return (
     <>
+            <Topnav headerContent1='Home' headerContent2='Page' />
             <Hero />
-            <h1 style={{color: 'white'}} className='topSongTitle'>Weekly Top <span className='coloredTxt'>Songs</span> </h1>
-            <div className='topCardContainer'>
+            <h1 style={{color: 'white'}} className='topSongTitle text-2xl'>Weekly Top <span className='coloredTxt'>Songs</span> </h1>
+            <div className='topCardContainer gap-4'>
                 {isLoading ? 
                 <div className='skeletonContainer'>
                     {[...Array(5)].map((_, i) => (
@@ -47,13 +48,13 @@ const Home = ({apiData, isLoading, setIsPlaying, isPlaying, setCurrentTrack, cur
                     ))
                 }
             </div>
-            <h1 style={{color: 'white'}} className='topSongTitle'>Trending<span className='coloredTxt'> Songs</span> </h1>
+            <h1 style={{color: 'white'}} className='topSongTitle text-2xl'>Trending<span className='coloredTxt'> Songs</span> </h1>
             <div className='trendingSong'>
                 <div className='topTrending'>
                     <div></div>
                     <div></div>
-                    <div style={{justifyItems: 'center'}}><h4>Release Date</h4></div>
-                    <div style={{justifyItems: 'center'}}><h4>Genre</h4></div>
+                    <div className='hidden md:block' style={{justifyItems: 'center'}}><h4>Release Date</h4></div>
+                    <div className='hidden md:block' style={{justifyItems: 'center'}}><h4>Genre</h4></div>
                     <div><h4>Time</h4></div>
                 </div>
                 {isLoading ? 
@@ -72,12 +73,12 @@ const Home = ({apiData, isLoading, setIsPlaying, isPlaying, setCurrentTrack, cur
                         ))}
                     </div>
                     : <Trending 
-                    trendNum={trendNum}
                         trendMusic={trendMusic}
                         currentTrack={currentTrack}
                         setCurrentTrack={setCurrentTrack}
                         isPlaying={isPlaying}
                         setIsPlaying={setIsPlaying} 
+                        trendNum={trendNum}
                     />
                 }
                 {/* view all btn */}
@@ -122,7 +123,6 @@ const Home = ({apiData, isLoading, setIsPlaying, isPlaying, setCurrentTrack, cur
                         ))}
                     </div>
                     : <PopularArtist 
-                        trendNum={trendNum}
                         trendMusic={trendMusic}
                         currentTrack={currentTrack}
                         setCurrentTrack={setCurrentTrack}

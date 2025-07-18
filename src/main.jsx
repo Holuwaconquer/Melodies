@@ -16,7 +16,6 @@ const store = configureStore({
 })
 
 createRoot(document.getElementById('root')).render(
-  // <StrictMode>
   <React.StrictMode>
     <Provider store={store}>
 

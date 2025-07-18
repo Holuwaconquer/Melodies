@@ -7,15 +7,17 @@ import Discover from './Pages/Discover'
 import Button from './Components/Button'
 import Footer from './Components/Footer'
 import AudioRail from './Components/AudioRail'
-import MusicPage from './Pages/MusicPage'
 import Artist from './Pages/Artist'
 import Profile from './Pages/Profile'
-import UserProfile from './Components/UserProfile'
+import TrendingPage from './Pages/TrendingPage'
+import { ToastContainer, toast } from 'react-toastify'
+import MobileNav from './Components/MobileNav'
 
 export const apiDetails = createContext()
 
 const App = () => {
 
+  let errorShown = false;
   const [apiData, setApiData] = useState([])
   const [isLoading, setisLoading] = useState(true)
   const [currentTrack, setCurrentTrack] = useState(null);
@@ -27,7 +29,19 @@ const [isPlaying, setIsPlaying] = useState(false);
           setisLoading(false);
       })
       .catch((error) => {
-          console.error('Error fetching trending tracks:', error);
+          console.error('Error fetching trending tracks:', error.message);
+          if(!errorShown){
+            if(error.message === 'Network Error'){
+              toast.error('There is a Network Error, pls check your internet connection!', {
+                hideProgressBar: true,
+                autoClose: 5000
+              })
+            }else{
+              toast.error('An error occured !')
+            }
+            errorShown = true
+          }
+
       })
       .finally(() => setisLoading(false));
       
@@ -36,6 +50,7 @@ const [isPlaying, setIsPlaying] = useState(false);
   return (
     <>
     <div>
+      <ToastContainer />
       <div className='main'>
         <Sidenav />
         <div className='mainContent'>
@@ -51,13 +66,18 @@ const [isPlaying, setIsPlaying] = useState(false);
                 setIsPlaying={setIsPlaying}/>}>
               </Route>
               <Route path='/discover' element={<Discover />}></Route>
-              <Route path='/MusicPage' element={<MusicPage />}></Route>
-              <Route path='/artists' element={<Artist />}></Route>
+              <Route path='/artists' element={<Artist apiData={apiData} />}></Route>
               <Route path='/home' element={<Navigate to='/' />}></Route>
               <Route path='/profile' element={<Profile />}></Route>
               <Route path='/profile/:id' element={<Profile />}></Route>
-              {/* <Route path='/abc' element={<UserProfile />}></Route> */}
-              {/* <Route path='/abc/:id' element={<UserProfile />}/> */}
+              <Route 
+                path='/trending-page' 
+                element={<TrendingPage currentTrack={currentTrack}
+                setCurrentTrack={setCurrentTrack}
+                isPlaying={isPlaying}
+                setIsPlaying={setIsPlaying} />}  
+                >
+              </Route>
               <Route path='*' element={<div className='text-center text-2xl'>Page Not Found</div>}></Route>
           </Routes>
           </apiDetails.Provider>  
@@ -66,8 +86,11 @@ const [isPlaying, setIsPlaying] = useState(false);
         <AudioRail 
           currentTrack={currentTrack} 
           isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying} 
+          setIsPlaying={setIsPlaying}
+          setCurrentTrack={setCurrentTrack} 
+          trackList={apiData}
         />
+        <MobileNav />
       </div>
     </div>
     </>

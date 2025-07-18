@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import playingGif from '../assets/playingGif.gif';
 import spinnerGif from '../assets/spinner.gif';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
-const Trending = ({ trendMusic, currentTrack, setCurrentTrack, isPlaying, setIsPlaying, trendNum }) => {
+
+const Trending = ({ trendMusic, trendNum, currentTrack, setCurrentTrack, isPlaying, setIsPlaying }) => {
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [loadingId, setLoadingId] = useState(null);
     const navigate = useNavigate();
+    
 
     function formatMsToMinutesSeconds(s) {
         const seconds = Math.floor(s);
@@ -30,28 +33,21 @@ const Trending = ({ trendMusic, currentTrack, setCurrentTrack, isPlaying, setIsP
                 setIsPlaying(true);
             } catch (err) {
                 console.error('Stream error:', err);
+                toast.error('An error occured !')
             } finally {
                 setLoadingId(null);
             }
         }
     };
 
-    const goTrend = (music) => {
-        navigate('/MusicPage', { state: { music } });
-    }; 
-
+    
     return (
         <>
             {trendMusic?.slice(0, trendNum).map((music, index) => (
                 <div
                     key={`${music.id}-${index}`}
                     style={{
-                        display: 'grid',
-                        gridTemplateColumns: '0.5fr 2fr 2fr 3fr 1fr',
-                        alignItems: 'center',
-                        width: '100%',
-                        padding: '10px 0',
-                        cursor: 'pointer'
+                        
                     }}
                     className='trendingTop hover:bg-gray-100'
                     onMouseOver={() => setHoveredIndex(index)}
@@ -79,28 +75,27 @@ const Trending = ({ trendMusic, currentTrack, setCurrentTrack, isPlaying, setIsP
                     <div
                         style={{ display: 'flex', alignItems: 'center', gap: '1em' }}
                         className='trendingThumbnail'
-                        onClick={() => goTrend(music)}
                     >
-                        <div style={{ width: '58px', height: '58px', borderRadius: '5px' }} className='imgTrend'>
+                        <div className='imgTrend w-[40px] h-[40px] rounded-[5px] md:w-[58px] md:h-[58px]'>
                             <img
                                 src={music.artwork?.['150x150'] || 'https://via.placeholder.com/58'}
                                 alt={music.title}
                                 style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '5px' }}
                             />
                         </div>
-                        <div>
-                            <h4 className="font-bold">{music.title}</h4>
+                        <div className='w-3/4 md:w-full'>
+                            <h4 className="font-bold text-[14px]">{music.title}</h4>
                             <p className="text-gray-600">{music.user?.name}</p>
                         </div>
                     </div>
 
                     {/* Release Date */}
-                    <div>
+                    <div className='text-center hidden md:block'>
                         <p>{music.release_date ? new Date(music.release_date).toLocaleDateString() : '-'}</p>
                     </div>
 
                     {/* Genre */}
-                    <div>
+                    <div className='hidden md:block'>
                         <p className='text-center'>{music.genre || '-'}</p>
                     </div>
 

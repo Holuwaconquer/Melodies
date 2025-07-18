@@ -23,7 +23,7 @@ const Sidenav = () => {
                 <div className='menuLink'>
                     <NavLink className={({ isActive }) => isActive ? 'homeLink active' : 'homeLink'} to='/'><img src={Homeicon} alt={Homeicon} /><span>Home</span></NavLink>
                     <NavLink className={({ isActive }) => isActive ? 'homeLink active' : 'homeLink'} to='/discover'><img src={Discover} alt={Discover} /><span>Discover</span></NavLink>
-                    <NavLink className={({ isActive }) => isActive ? 'homeLink active' : 'homeLink'} to='/albums'><img src={Albums} alt={Albums} /><span>Albums</span></NavLink>
+                    <NavLink className={({ isActive }) => isActive ? 'homeLink active' : 'homeLink'} to='/trending-page'><img src={Albums} alt={Albums} /><span>Albums</span></NavLink>
                     <NavLink className={({ isActive }) => isActive ? 'homeLink active' : 'homeLink'} to='/artists'><img src={Artist} alt={Artist} /><span>Artists</span></NavLink>
                 </div>
                 <h4>Library</h4>

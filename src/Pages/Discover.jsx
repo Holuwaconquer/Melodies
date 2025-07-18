@@ -4,6 +4,7 @@ import { apiDetails } from '../App'
 import Genre from '../Components/Genre'
 import PopularArtist from '../Components/PopularArtist'
 import Mood from '../Components/Mood'
+import Topnav from '../Components/Topnav'
 
 const Discover = ({trendNum, trendMusic, currentTrack, setCurrentTrack, isPlaying, setIsPlaying, apiData}) => {
   
@@ -11,6 +12,7 @@ const Discover = ({trendNum, trendMusic, currentTrack, setCurrentTrack, isPlayin
   
   return (
     <>
+      <Topnav headerContent1='Dis' headerContent2='Cover' />
       <h1 style={{color: 'white'}} className='topSongTitle'>Music <span className='coloredTxt'>Genres</span> </h1>
       <div style={{}} className='w-full'>
         <Genre />

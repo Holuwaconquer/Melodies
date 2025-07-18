@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 const Footer = () => {
   return (
     <>
-        <div className='footerSection'>
+        <div className='footerSection hidden md:block'>
             <div className='footerContainer'>
                 {/* about footer */}
                 <div className='aboutFooter'>

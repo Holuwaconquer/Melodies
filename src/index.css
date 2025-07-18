@@ -26,7 +26,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* color: #333333a9; */
 }
 html, body{
   scroll-behavior: smooth;
@@ -188,7 +187,7 @@ body{
   }
 }
 .heroContentSection{
-  transform: translateY(20%);
+  transform: translateY(10%);
   width: 100%;
   height: 100%;
 }
@@ -244,6 +243,7 @@ body{
   margin: 24px 0;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  /* overflow: hidden; */
 }
 .card {
   background: #232323;
@@ -305,14 +305,19 @@ body{
 }
 .footerSection{
   width: 100%;
+  margin: 5% 0 0px;
+  position: relative;
+  background-color: var(--sidenav-bg);
 }
+
 .footerContainer{
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
   gap: 22px;
-  align-items: center;
+  align-items: start;
+  padding: 20px 0;
 
   p{
     color: var(--text-color);
@@ -361,6 +366,12 @@ body{
   padding: 8px;
   border-radius: 5px;
   margin: 10px 0;
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 2fr 3fr 1fr;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  cursor: pointer;
 }
 .trendingTop:hover{
   background-color: var(--sidenav-bg);
@@ -460,10 +471,6 @@ body{
   .heroSection{
     min-height: 50vh;
   }
-  .heroContainer{
-    height: 100%;
-    width: 100%;
-  }
   .topNav{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -489,8 +496,56 @@ body{
 }
 
 @media screen and (max-width: 768px) {
+  ::-webkit-scrollbar{
+    display: none;
+  }
   .sideNav{
     display: none;
   }
+  .topCardContainer{
+    width: 115%;
+    margin: 24px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    /* overflow-x: scroll; */
+  }
+  .trendingTop{
+    background-color: var(--trending-song);
+    grid-template-columns: 0.5fr 6fr 1fr;
+    gap: 5px;
+  }
+  .topTrending{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 0.5fr 6fr 1fr;
+  }
+}
 
+.isRailvisible{
+  animation: goUpAndDown 2s ease-in-out infinite;
+}
+@keyframes goUpAndDown {
+  0%{
+    transform: translateY(0px);
+  }
+  50%{
+    transform: translateY(-10px);
+  }
+  100%{
+    transform: translateY(0px);
+  }
+}
+.MobileLink{
+  color: var(--secondary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  img{
+    width: 35px;
+    height: 35px;
+  }
+}
+.MobileLink.active{
+  color: var(--primary-color);
 }
