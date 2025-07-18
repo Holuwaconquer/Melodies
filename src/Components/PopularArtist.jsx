@@ -17,7 +17,7 @@ const PopularArtist = ({ trendMusic }) => {
   return (
     
     <div style={{margin: '20px 0'}} className='w-full grid items-center flex-nowrap justify-center grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_1fr] gap-[36px] p-4'>
-      {trendMusic?.slice(0, 5).map((music, index) => (
+      {trendMusic?.slice(0, 7).map((music, index) => (
         <Link to={`/profile/${music.user.name}`}  onClick={()=> dispatch(setSender(music))} key={index}>
         <div  key={index} className='popularArtistCard cursor-pointer flex flex-col items-center w-full justify-center gap-2'>
           <div className='w-[130px] h-[130px] rounded-full overflow-hidden'>

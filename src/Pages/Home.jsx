@@ -32,22 +32,24 @@ const Home = ({apiData, isLoading, setIsPlaying, isPlaying, setCurrentTrack, cur
             <Topnav headerContent1='Home' headerContent2='Page' />
             <Hero />
             <h1 style={{color: 'white'}} className='topSongTitle text-2xl'>Weekly Top <span className='coloredTxt'>Songs</span> </h1>
-            <div className='topCardContainer gap-4'>
-                {isLoading ? 
-                <div className='skeletonContainer'>
-                    {[...Array(5)].map((_, i) => (
+            <div className="topCardWrapper">
+                <div className="topCardContainer">
+                    {isLoading ? (
+                    <div className="skeletonContainer">
+                        {[...Array(5)].map((_, i) => (
                         <div className="skeleton-loader" key={i}>
                             <div className="image"></div>
                             <div className="title"></div>
                             <div className="subtitle"></div>
                         </div>
-                    ))}
+                        ))}
+                    </div>
+                    ) : (
+                    apiData.slice(0, 5).map((music, index) => <Card key={index} music={music} />)
+                    )}
                 </div>
-                    : apiData.slice(0, 5).map((music, index) =>(
-                        <Card key={index} music={music}/>
-                    ))
-                }
-            </div>
+                </div>
+
             <h1 style={{color: 'white'}} className='topSongTitle text-2xl'>Trending<span className='coloredTxt'> Songs</span> </h1>
             <div className='trendingSong'>
                 <div className='topTrending'>

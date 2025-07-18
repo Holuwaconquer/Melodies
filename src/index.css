@@ -242,8 +242,8 @@ body{
   width: 100%;
   margin: 24px 0;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  /* overflow: hidden; */
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
 }
 .card {
   background: #232323;
@@ -499,15 +499,28 @@ body{
   ::-webkit-scrollbar{
     display: none;
   }
-  .sideNav{
+  .topCardContainer {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 175px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding: 10px;
+    gap: 16px;
+    width: 100%;
+  }
+   
+  .topCardContainer::-webkit-scrollbar {
     display: none;
   }
-  .topCardContainer{
-    width: 115%;
-    margin: 24px 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    /* overflow-x: scroll; */
+  .card {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    height: auto; 
+  }
+  .sideNav{
+    display: none;
   }
   .trendingTop{
     background-color: var(--trending-song);
