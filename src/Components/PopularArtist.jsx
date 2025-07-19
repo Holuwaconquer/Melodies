@@ -11,9 +11,6 @@ const PopularArtist = ({ trendMusic }) => {
   const dispatch = useDispatch()
 
   const navaigate = useNavigate()
-  const viewProfile =(music) =>{
-    navaigate('/profile', { state: { music } })
-  }
   return (
     
     <div style={{margin: '20px 0'}} className='w-full grid items-center flex-nowrap justify-center grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_1fr] gap-[36px] p-4'>

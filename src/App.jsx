@@ -21,30 +21,29 @@ const App = () => {
   const [apiData, setApiData] = useState([])
   const [isLoading, setisLoading] = useState(true)
   const [currentTrack, setCurrentTrack] = useState(null);
-const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   useEffect(() => {
-      axios.get('https://api.audius.co/v1/tracks/trending')
-      .then((response) => {
-          setApiData(response.data.data || []);
-          setisLoading(false);
-      })
-      .catch((error) => {
-          console.error('Error fetching trending tracks:', error.message);
-          if(!errorShown){
-            if(error.message === 'Network Error'){
-              toast.error('There is a Network Error, pls check your internet connection!', {
-                hideProgressBar: true,
-                autoClose: 5000
-              })
-            }else{
-              toast.error('An error occured !')
-            }
-            errorShown = true
-          }
+    axios.get('https://api.audius.co/v1/tracks/trending')
+    .then((response) => {
+      setApiData(response.data.data || []);
+      setisLoading(false);
+    })
+    .catch((error) => {
+      console.error('Error fetching trending tracks:', error.message);
+      if(!errorShown){
+        if(error.message === 'Network Error'){
+          toast.error('There is a Network Error, pls check your internet connection!', {
+            hideProgressBar: true,
+            autoClose: 5000
+          })
+        }else{
+          toast.error('An error occured !')
+        }
+        errorShown = true
+      }
 
-      })
-      .finally(() => setisLoading(false));
-      
+    })
+    .finally(() => setisLoading(false));
     }, [])
   
   return (
@@ -55,31 +54,32 @@ const [isPlaying, setIsPlaying] = useState(false);
         <Sidenav />
         <div className='mainContent'>
           <apiDetails.Provider value={apiData}>
-
-          <Routes>
-              <Route path='/' 
-                element={<Home isLoading={isLoading} 
-                apiData={apiData}
-                currentTrack={currentTrack}
-                setCurrentTrack={setCurrentTrack}
-                isPlaying={isPlaying}
-                setIsPlaying={setIsPlaying}/>}>
-              </Route>
+            <Routes>
+              <Route path='/' element={
+                <Home 
+                  isLoading={isLoading} 
+                  apiData={apiData}
+                  currentTrack={currentTrack}
+                  setCurrentTrack={setCurrentTrack}
+                  isPlaying={isPlaying}
+                  setIsPlaying={setIsPlaying}
+                />
+              }/>
               <Route path='/discover' element={<Discover />}></Route>
               <Route path='/artists' element={<Artist apiData={apiData} />}></Route>
               <Route path='/home' element={<Navigate to='/' />}></Route>
               <Route path='/profile' element={<Profile />}></Route>
               <Route path='/profile/:id' element={<Profile />}></Route>
-              <Route 
-                path='/trending-page' 
-                element={<TrendingPage currentTrack={currentTrack}
-                setCurrentTrack={setCurrentTrack}
-                isPlaying={isPlaying}
-                setIsPlaying={setIsPlaying} />}  
-                >
-              </Route>
+              <Route path='/trending-page' element={
+                <TrendingPage 
+                  currentTrack={currentTrack}
+                  setCurrentTrack={setCurrentTrack}
+                  isPlaying={isPlaying}
+                  setIsPlaying={setIsPlaying} 
+                />
+              } />
               <Route path='*' element={<div className='text-center text-2xl'>Page Not Found</div>}></Route>
-          </Routes>
+            </Routes>
           </apiDetails.Provider>  
           <Footer />
         </div>

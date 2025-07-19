@@ -1,6 +1,4 @@
 import React, { useContext, useState } from 'react'
-import BgImage from '../assets/bg-image.png'
-import { apiDetails } from '../App'
 import Genre from '../Components/Genre'
 import PopularArtist from '../Components/PopularArtist'
 import Mood from '../Components/Mood'
