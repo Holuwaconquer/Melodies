@@ -11,10 +11,8 @@ const Card = ({ music, setCurrentTrack, setIsPlaying, currentTrack, isPlaying })
     const musicUrl = `https://api.audius.co/v1/tracks/${music.id}/stream`;
 
     if (currentTrack?.id === music.id) {
-      // If this song is already playing, toggle
       setIsPlaying(!isPlaying);
     } else {
-      // Otherwise, play new song
       setCurrentTrack({
         ...music,
         audioUrl: musicUrl,
@@ -22,15 +20,6 @@ const Card = ({ music, setCurrentTrack, setIsPlaying, currentTrack, isPlaying })
       setIsPlaying(true);
     }
   };
-
-  // useEffect(() => {
-  //   return () => {
-  //     if (audioRef.current) {
-  //       audioRef.current.pause();
-  //     }
-  //   };
-  // }, []);
-
 
   return (
     <>

@@ -28,7 +28,9 @@ const Home = ({apiData, isLoading, setIsPlaying, isPlaying, setCurrentTrack, cur
 
   return (
     <>
-            <Topnav headerContent1='Home' headerContent2='Page' />
+            <div style={{marginBottom: '20px'}}>
+                <Topnav headerContent1='Home' headerContent2='Page' />
+            </div>
             <Hero />
             <h1 style={{color: 'white'}} className='topSongTitle text-2xl'>Weekly Top <span className='coloredTxt'>Songs</span> </h1>
             <div className="topCardWrapper">

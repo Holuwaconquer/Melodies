@@ -89,7 +89,7 @@ const TrendingPage = ({ currentTrack, setCurrentTrack, isPlaying, setIsPlaying})
   return (
     <>
       <div>
-        <div className='w-full flex items-center justify-between'>
+        <div style={{marginBottom: '20px'}} className='w-full flex items-center justify-between'>
           <div>
             <img className='cursor-pointer w-[50px]' onClick={navigateBack} src={BackArrow} alt="" />
           </div>
