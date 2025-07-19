@@ -43,7 +43,7 @@ const Card = ({ music, setCurrentTrack, setIsPlaying, currentTrack, isPlaying })
 
         <div className='playBtn'>
           <button onClick={handlePlay}>
-            {!isPlaying ? '⏸' :'▶' } 
+            {isPlaying ? '⏸' :'▶' } 
             </button>
         </div>
       </div>

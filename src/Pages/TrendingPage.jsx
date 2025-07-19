@@ -89,12 +89,18 @@ const TrendingPage = ({ currentTrack, setCurrentTrack, isPlaying, setIsPlaying})
   return (
     <>
       <div>
-        <Topnav headerContent1='Al' headerContent2='bumn' />
+        <div className='w-full flex items-center justify-between'>
+          <div>
+            <img className='cursor-pointer w-[50px]' onClick={navigateBack} src={BackArrow} alt="" />
+          </div>
+          <div>
+            <Topnav headerContent1='Al' headerContent2='bum' />
+          </div>
+          <div></div>
+        </div>
         <div className='w-full h-[216px] lg:h-[400px] relative rounded-[10px]' style={{background: 'linear-gradient(to right, rgba(17, 113, 226, 100), rgba(83, 173, 214, 0.2))', backgroundSize: 'cover', marginBottom: '20px', padding: '20px'}}>
           <div className='flex flex-col justify-between h-full w-full'>
-            <div>
-              <img className='cursor-pointer' onClick={navigateBack} src={BackArrow} alt="" />
-            </div>
+            <div></div>
             <div className='flex flex-col lg:flex-row lg:justify-between items-end'>
               <div className='flex items-center gap-4'>
                 <div className='w-[160px] h-[100px] lg:w-[268px] lg:h-[268px] object-fit-cover rounded-[10px]'>
@@ -116,7 +122,7 @@ const TrendingPage = ({ currentTrack, setCurrentTrack, isPlaying, setIsPlaying})
           </div>
         </div>
       </div>
-      <div className='text-white'>
+      <div style={{marginBottom: '60px'}} className='text-white'>
         <div className='topTrending'>
           <div></div>
           <div></div>
