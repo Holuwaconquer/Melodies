@@ -44,7 +44,7 @@ const Home = ({apiData, isLoading, setIsPlaying, isPlaying, setCurrentTrack, cur
                         ))}
                     </div>
                     ) : (
-                    apiData.slice(0, 5).map((music, index) => <Card key={index} music={music} />)
+                    apiData.slice(0, 5).map((music, index) => <Card key={index} music={music} setCurrentTrack={setCurrentTrack} setIsPlaying={setIsPlaying} isPlaying={isPlaying} currentTrack={currentTrack}/>)
                     )}
                 </div>
                 </div>

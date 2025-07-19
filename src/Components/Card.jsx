@@ -2,39 +2,34 @@ import React, { useEffect, useRef, useState } from 'react'
 import Cardimg from '../assets/bg-image.png'
 import axios from 'axios'
 
-const Card = ({ music }) => {   
+const Card = ({ music, setCurrentTrack, setIsPlaying, currentTrack, isPlaying }) => {   
 
-  const [isPlaying, setIsPlaying] = useState(false)
 
   const audioRef = useRef(null)
 
-  const playMusic = () =>{
-    const musicUrl = `https://api.audius.co/v1/tracks/${music.id}/stream`
-    if(isPlaying){
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
-      setIsPlaying(false)
-    }else{
-      audioRef.current = new Audio(musicUrl);
-      audioRef.current.crossOrigin = 'anonymous';
-      if (audioRef.current) {
-        audioRef.current.play();
-      }
-      setIsPlaying(true)
+  const handlePlay = () => {
+    const musicUrl = `https://api.audius.co/v1/tracks/${music.id}/stream`;
 
-      audioRef.current.onended = () =>{
-        setIsPlaying(false)
-      }
+    if (currentTrack?.id === music.id) {
+      // If this song is already playing, toggle
+      setIsPlaying(!isPlaying);
+    } else {
+      // Otherwise, play new song
+      setCurrentTrack({
+        ...music,
+        audioUrl: musicUrl,
+      });
+      setIsPlaying(true);
     }
-  }
-  useEffect(() => {
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
-    };
-  }, []);
+  };
+
+  // useEffect(() => {
+  //   return () => {
+  //     if (audioRef.current) {
+  //       audioRef.current.pause();
+  //     }
+  //   };
+  // }, []);
 
 
   return (
@@ -47,8 +42,8 @@ const Card = ({ music }) => {
           <p>{music.user.name}</p>
 
         <div className='playBtn'>
-          <button onClick={playMusic}>
-            {isPlaying ? '⏸' :'▶' } 
+          <button onClick={handlePlay}>
+            {!isPlaying ? '⏸' :'▶' } 
             </button>
         </div>
       </div>

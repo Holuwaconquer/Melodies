@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Spinner from '../assets/spinner.gif'
+import Spinner from '../assets/spinner.gif';
 
 const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, trackList = [] }) => {
   const audioRef = useRef(null);
@@ -15,19 +15,35 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
     const audio = audioRef.current;
     if (!audio || !currentTrack?.audioUrl) return;
 
-    if (audio.src !== currentTrack.audioUrl) {
-      audio.src = currentTrack.audioUrl;
-      audio.load();
-    }
+    audio.src = currentTrack.audioUrl;
+    audio.load();
+
+    const handleLoaded = () => {
+      if (isPlaying) {
+        audio.play().catch(err => console.warn('Autoplay failed:', err));
+      }
+    };
+
+    audio.addEventListener('loadedmetadata', handleLoaded);
+    return () => {
+      audio.removeEventListener('loadedmetadata', handleLoaded);
+    };
+  }, [currentTrack]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
 
     if (isPlaying) {
       audio.play().catch(err => {
-        console.warn("Playback failed:", err);
+        console.warn('Playback failed:', err);
       });
     } else {
       audio.pause();
     }
-  }, [currentTrack, isPlaying]);
+  }, [isPlaying]);
+
+  useEffect(() => setCurrentTime(0), [currentTrack]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -52,7 +68,6 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
     };
   }, [currentTrack]);
 
-
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -70,8 +85,6 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
       audio.removeEventListener('canplay', handlePlaying);
     };
   }, [currentTrack]);
-
-  useEffect(() => setCurrentTime(0), [currentTrack]);
 
   const formatTime = (s) => {
     const m = Math.floor(s / 60);
@@ -116,26 +129,17 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
       style={isRailVisible ? { transform: 'translateY(0%)', padding: '10px 20px' } : { transform: 'translateY(100%)', padding: '10px 20px' }}
       className="w-[100%] bg-[#252525] rounded-[5px] lg:rounded-0 lg:bg-[#EE10B0] flex flex-col items-center justify-center fixed bottom-[80px] lg:bottom-0 left-0 forAudio z-50"
     >
-      {currentTrack?.audioUrl && 
-        <audio
-          ref={audioRef}
-          src={currentTrack?.audioUrl || null}
-          onLoadedMetadata={() => {
-            if (isPlaying) {
-              audioRef.current?.play().catch(err => {
-                console.error("Playback failed:", err);
-              });
-            }
-          }}
-        />
-      }
+      <audio ref={audioRef} />
+
       <div className='w-[100%] flex flex-col items-center justify-center'>
         <div className='w-[100%] h-[100%] grid grid-cols-[3fr_1fr] lg:grid-cols-[1fr_1fr_1fr] grid-rows-[auto] items-center'>
-
-          {/* first */}
           <div className='flex items-center gap-3 justify-start text-white mb-2 px-4'>
             <div className='w-[50px] h-[50px] rounded-[10px] object-fit-cover'>
-              <img className='w-[100%] h-[100%] rounded-[10px]' src={currentTrack.artwork?.['150x150'] || 'https://via.placeholder.com/58'} alt="no-image" />
+              <img
+                className='w-[100%] h-[100%] rounded-[10px]'
+                src={currentTrack.artwork?.['150x150'] || 'https://via.placeholder.com/58'}
+                alt="no-image"
+              />
             </div>
             <div>
               <h1>{currentTrack.title}</h1>
@@ -143,7 +147,6 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
             </div>
           </div>
 
-          {/* second */}
           <div className="text-white text-center mb-2 px-4 flex justify-center items-center gap-4 text-2xl">
             <button onClick={handlePrevious}>⏮</button>
             <button onClick={() => setIsPlaying(prev => !prev)}>
@@ -151,7 +154,6 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
             </button>
             <button onClick={handleNext}>⏭</button>
 
-            {/* ✅ Spinner */}
             {isBuffering && (
               <img
                 src={Spinner}
@@ -161,8 +163,7 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
             )}
           </div>
 
-          {/* third */}
-          <div className="text-white absolute text-[14px] bottom-[10px] right-[20px] lg:relative lg:block text-right lg:text-[20px]">
+          <div className="text-white absolute text-[14px] bottom-[0px] right-[20px] lg:relative lg:block text-right lg:text-[20px]">
             <span>{formatTime(currentTime)} / </span>
             <span>{formatTime(duration)}</span>
           </div>

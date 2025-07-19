@@ -19,6 +19,8 @@ const Profile = () => {
           const allSongs = response.data.data;
           const filteredUser = allSongs.filter((artist) => artist.user.name === id);
           setUser(filteredUser);
+          console.log(response);
+          
         })
         .catch((error) => {
           console.error('Error fetching trending tracks:', error);
