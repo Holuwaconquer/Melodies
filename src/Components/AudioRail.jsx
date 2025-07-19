@@ -7,7 +7,7 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isRailVisible, setIsRailVisible] = useState(true);
-  const [isBuffering, setIsBuffering] = useState(false); // ✅ added
+  const [isBuffering, setIsBuffering] = useState(false);
 
   const showRail = () => setIsRailVisible(!isRailVisible);
 
@@ -52,7 +52,7 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
     };
   }, [currentTrack]);
 
-  // ✅ Buffering indicator effect
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -113,7 +113,7 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
 
   return (
     <div
-      style={isRailVisible ? { transform: 'translateY(0%)', padding: '10px 20px' } : { transform: 'translateY(90%)', padding: '10px 20px' }}
+      style={isRailVisible ? { transform: 'translateY(0%)', padding: '10px 20px' } : { transform: 'translateY(100%)', padding: '10px 20px' }}
       className="w-[100%] bg-[#252525] rounded-[5px] md:rounded-0 md:bg-[#EE10B0] flex flex-col items-center justify-center fixed bottom-[80px] md:bottom-0 left-0 forAudio z-50"
     >
       {currentTrack?.audioUrl && 
@@ -162,7 +162,7 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
           </div>
 
           {/* third */}
-          <div className="text-white hidden md:block text-right text-[20px]">
+          <div className="text-white absolute text-[14px] bottom-[10px] right-[20px] md:relative md:block text-right md:text-[20px]">
             <span>{formatTime(currentTime)} / </span>
             <span>{formatTime(duration)}</span>
           </div>
