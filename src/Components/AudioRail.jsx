@@ -114,7 +114,7 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
   return (
     <div
       style={isRailVisible ? { transform: 'translateY(0%)', padding: '10px 20px' } : { transform: 'translateY(100%)', padding: '10px 20px' }}
-      className="w-[100%] bg-[#252525] rounded-[5px] md:rounded-0 md:bg-[#EE10B0] flex flex-col items-center justify-center fixed bottom-[80px] md:bottom-0 left-0 forAudio z-50"
+      className="w-[100%] bg-[#252525] rounded-[5px] lg:rounded-0 lg:bg-[#EE10B0] flex flex-col items-center justify-center fixed bottom-[80px] lg:bottom-0 left-0 forAudio z-50"
     >
       {currentTrack?.audioUrl && 
         <audio
@@ -130,7 +130,7 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
         />
       }
       <div className='w-[100%] flex flex-col items-center justify-center'>
-        <div className='w-[100%] h-[100%] grid grid-cols-[3fr_1fr] md:grid-cols-[1fr_1fr_1fr] grid-rows-[auto] items-center'>
+        <div className='w-[100%] h-[100%] grid grid-cols-[3fr_1fr] lg:grid-cols-[1fr_1fr_1fr] grid-rows-[auto] items-center'>
 
           {/* first */}
           <div className='flex items-center gap-3 justify-start text-white mb-2 px-4'>
@@ -162,7 +162,7 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
           </div>
 
           {/* third */}
-          <div className="text-white absolute text-[14px] bottom-[10px] right-[20px] md:relative md:block text-right md:text-[20px]">
+          <div className="text-white absolute text-[14px] bottom-[10px] right-[20px] lg:relative lg:block text-right lg:text-[20px]">
             <span>{formatTime(currentTime)} / </span>
             <span>{formatTime(duration)}</span>
           </div>

@@ -38,26 +38,26 @@ const Profile = () => {
     <>
       {
       user ? (
-        <div className='w-full h-[400px] rounded-[10px]' style={{background: `linear-gradient(to right, #333333a9, #333333a9), url(${user.user.cover_photo?.['640x']}) center center no-repeat`, backgroundSize: 'cover', marginBottom: '20px', padding: '20px'}}>
+        <div className='w-full h-[300px] md:h-[400px] rounded-[10px]' style={{background: `linear-gradient(to right, #333333a9, #333333a9), url(${user.user.cover_photo?.['640x']}) center center no-repeat`, backgroundSize: 'cover', marginBottom: '20px', padding: '20px'}}>
           <div className='flex flex-col justify-between h-full w-full'>
             <div>
               <img className='cursor-pointer' onClick={navigateBack} src={BackArrow} alt="" />
             </div>
-            <div className='flex justify-between items-center'>
+            <div className='flex flex-col md:flex-row lg:justify-between lg:items-center'>
               <div className='flex items-center gap-4'>
                 <div className='w-[100px] h-[100px] object-fit-cover rounded-[50%]'>
                   <img className='w-full h-full object-fit-cover rounded-[50%]' src={user.user.profile_picture?.['480x480']} alt="" />
                 </div>
                 <div>
                   <h1 className='text-white text-4xl'>{user.user.name}</h1>
-                  <p className='text-gray-400 w-3/4'>{user.user.bio}</p>
+                  <p className='text-gray-400 w-3/4'>@{user.user.instagram_handle}</p>
                 </div>
               </div>
 
               {/* track count */}
-              <div className='flex flex-col items-center'>
-                <h1 className='text-white text-3xl'>{user.user.track_count}</h1>
-                <p className='text-gray-300'>No of Tracks</p>
+              <div className='flex flex-row-reverse md:flex-col gap-2 lg:gap-0 items-center'>
+                <h1 className='text-white lg:text-3xl text-2xl'>{user.user.track_count}</h1>
+                <p className='text-gray-300 text-2xl lg:text-[16px]'>No of Tracks<span className='lg:hidden'>:</span></p>
               </div>
             </div>
           </div>

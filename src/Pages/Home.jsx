@@ -54,8 +54,8 @@ const Home = ({apiData, isLoading, setIsPlaying, isPlaying, setCurrentTrack, cur
                 <div className='topTrending'>
                     <div></div>
                     <div></div>
-                    <div className='hidden md:block' style={{justifyItems: 'center'}}><h4>Release Date</h4></div>
-                    <div className='hidden md:block' style={{justifyItems: 'center'}}><h4>Genre</h4></div>
+                    <div className='hidden lg:block' style={{justifyItems: 'center'}}><h4>Release Date</h4></div>
+                    <div className='hidden lg:block' style={{justifyItems: 'center'}}><h4>Genre</h4></div>
                     <div><h4>Time</h4></div>
                 </div>
                 {isLoading ? 
@@ -90,6 +90,7 @@ const Home = ({apiData, isLoading, setIsPlaying, isPlaying, setCurrentTrack, cur
                         display: showViewAllBtn ? 'flex' : 'none',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        marginBottom: '20px'
                     }}
                 >
                     <button onClick={seemore}
@@ -112,7 +113,7 @@ const Home = ({apiData, isLoading, setIsPlaying, isPlaying, setCurrentTrack, cur
                 </div>
                 {/* end of viewallbtn */}
 
-                <h1 style={{color: 'white'}} className='topSongTitle'>Popular <span className='coloredTxt'>Artist</span> </h1>
+                <h1 style={{color: 'white'}} className='topSongTitle text-2xl'>Popular <span className='coloredTxt'>Artist</span> </h1>
                 <div className='topCardContainer'>
                 {isLoading ? 
                     <div className='skeletonContainer'>

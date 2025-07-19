@@ -90,25 +90,25 @@ const TrendingPage = ({ currentTrack, setCurrentTrack, isPlaying, setIsPlaying})
     <>
       <div>
         <Topnav headerContent1='Al' headerContent2='bumn' />
-        <div className='w-full h-[216px] md:h-[400px] relative rounded-[10px]' style={{background: 'linear-gradient(to right, rgba(17, 113, 226, 100), rgba(83, 173, 214, 0.2))', backgroundSize: 'cover', marginBottom: '20px', padding: '20px'}}>
+        <div className='w-full h-[216px] lg:h-[400px] relative rounded-[10px]' style={{background: 'linear-gradient(to right, rgba(17, 113, 226, 100), rgba(83, 173, 214, 0.2))', backgroundSize: 'cover', marginBottom: '20px', padding: '20px'}}>
           <div className='flex flex-col justify-between h-full w-full'>
             <div>
               <img className='cursor-pointer' onClick={navigateBack} src={BackArrow} alt="" />
             </div>
-            <div className='flex flex-col md:flex-row md:justify-between items-end'>
+            <div className='flex flex-col lg:flex-row lg:justify-between items-end'>
               <div className='flex items-center gap-4'>
-                <div className='w-[160px] h-[100px] md:w-[268px] md:h-[268px] object-fit-cover rounded-[10px]'>
+                <div className='w-[160px] h-[100px] lg:w-[268px] lg:h-[268px] object-fit-cover rounded-[10px]'>
                   <img className='w-full h-full object-fit-cover rounded-[10px]' src={TrendImage} alt="" />
                 </div>
-                <div style={{padding: '15px 0'}} className='flex md:h-[268px] flex-col justify-between'>
-                  <h1 className='text-white text-2xl md:text-4xl font-bold'>Trending Song <span className='coloredTxt'>Mix</span></h1>
-                  <p className='text-white hidden md:block w-3/4'>tate mcree, nightmares, the neighberhood, doja cat and ...</p>
+                <div style={{padding: '15px 0'}} className='flex lg:h-[268px] flex-col justify-between'>
+                  <h1 className='text-white text-2xl lg:text-4xl font-bold'>Trending Song <span className='coloredTxt'>Mix</span></h1>
+                  <p className='text-white hidden lg:block w-3/4'>tate mcree, nightmares, the neighberhood, doja cat and ...</p>
                   <p className='text-white text-[20px]'>{trendMusic.length} Songs <span className='coloredTxt'>▪</span> {formatMsToMinutesSeconds(3311) || '00:00'}</p>
                 </div>
               </div>
 
               {/* track count */}
-              <div onClick={playAll} className='cursor-pointer absolute top-[5%] md:relative flex flex-col items-center text-[#EE10B0]'>
+              <div onClick={playAll} className='cursor-pointer absolute top-[5%] lg:relative flex flex-col items-center text-[#EE10B0]'>
                 <h1 style={{padding: '2px 8px'}} className='text-3xl border-3 border-[#EE10B0] rounded-[50%]'>▶</h1>
                 <p className=''>Play All</p>
               </div>
@@ -120,8 +120,8 @@ const TrendingPage = ({ currentTrack, setCurrentTrack, isPlaying, setIsPlaying})
         <div className='topTrending'>
           <div></div>
           <div></div>
-          <div className='hidden md:block' style={{justifyItems: 'center'}}><h4>Release Date</h4></div>
-          <div className='hidden md:block' style={{justifyItems: 'center'}}><h4>Genre</h4></div>
+          <div className='hidden lg:block' style={{justifyItems: 'center'}}><h4>Release Date</h4></div>
+          <div className='hidden lg:block' style={{justifyItems: 'center'}}><h4>Genre</h4></div>
           <div><h4>Time</h4></div>
         </div>
         <Trending 

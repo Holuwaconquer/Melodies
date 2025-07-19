@@ -109,7 +109,7 @@ body{
   padding: 25px;
   background: linear-gradient(to right, #000000, #00000000), url(./assets/bg-image.png) center center no-repeat;
   background-size: cover;
-  min-height: 80vh;
+  min-height: 70vh;
   height: auto;
   border-radius: 25px;
   position: relative;
@@ -240,11 +240,15 @@ body{
 
 .topCardContainer{
   width: 100%;
-  margin: 24px 0;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  margin: 10px 0 24px;
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  padding: 10px;
   gap: 16px;
 }
+
 .card {
   background: #232323;
   border-radius: 10px;
@@ -359,7 +363,7 @@ body{
 .trendingSong{
   width: 100%;
   color: var(--text-color);
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .trendingTop{
   background-color: var(--trending-song);
@@ -463,39 +467,29 @@ body{
   width: 100%;
   gap: 1em;
 }
-.forAudio{
-  /* width: 100%; */
+
+@media screen and (min-width: 1025px) and (max-width: 1199px){
+  .heroContent{
+    width: 70%;
+  }
+  .heroContentSection{
+    transform: translateY(50px);
+  }
+}
+
+.loadingImg{
+  animation: loaderSpinner 1s infinite ease-in-out;
+}
+@keyframes loaderSpinner {
+  from{
+    transform: rotate(-360deg);
+  }
+  to{
+    transform: rotate(0deg);
+  }
 }
 
 @media screen and (max-width: 1024px) {
-  .heroSection{
-    min-height: 50vh;
-  }
-  .topNav{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-  }
-  .actionBtn{
-    gap: 5px;
-  }
-  .loginBtn{
-    padding: 16px 35px;
-  }
-
-  .heroContentSection{
-    transform: translateY(0%);
-  }
-  .heroContent{
-    gap: 16px;
-  }
-}
-
-@media screen and (max-width: 768px) {
   ::-webkit-scrollbar{
     display: none;
   }

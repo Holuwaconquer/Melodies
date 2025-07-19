@@ -76,26 +76,26 @@ const Trending = ({ trendMusic, trendNum, currentTrack, setCurrentTrack, isPlayi
                         style={{ display: 'flex', alignItems: 'center', gap: '1em' }}
                         className='trendingThumbnail'
                     >
-                        <div className='imgTrend w-[40px] h-[40px] rounded-[5px] md:w-[58px] md:h-[58px]'>
+                        <div className='imgTrend w-[40px] h-[40px] rounded-[5px] lg:w-[58px] lg:h-[58px]'>
                             <img
                                 src={music.artwork?.['150x150'] || 'https://via.placeholder.com/58'}
                                 alt={music.title}
                                 style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '5px' }}
                             />
                         </div>
-                        <div className='w-3/4 md:w-full'>
+                        <div className='w-3/4 lg:w-full'>
                             <h4 className="font-bold text-[14px]">{music.title}</h4>
                             <p className="text-gray-600">{music.user?.name}</p>
                         </div>
                     </div>
 
                     {/* Release Date */}
-                    <div className='text-center hidden md:block'>
+                    <div className='text-center hidden lg:block'>
                         <p>{music.release_date ? new Date(music.release_date).toLocaleDateString() : '-'}</p>
                     </div>
 
                     {/* Genre */}
-                    <div className='hidden md:block'>
+                    <div className='hidden lg:block'>
                         <p className='text-center'>{music.genre || '-'}</p>
                     </div>
 

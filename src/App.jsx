@@ -12,10 +12,13 @@ import Profile from './Pages/Profile'
 import TrendingPage from './Pages/TrendingPage'
 import { ToastContainer, toast } from 'react-toastify'
 import MobileNav from './Components/MobileNav'
+import SplashScreen from './Pages/SplashScreen'
 
 export const apiDetails = createContext()
 
 const App = () => {
+
+  const [pageShown, setpageShown] = useState(true)
 
   let errorShown = false;
   const [apiData, setApiData] = useState([])
@@ -44,10 +47,19 @@ const App = () => {
 
     })
     .finally(() => setisLoading(false));
+
+    const timer = setTimeout(() => setpageShown(false), 3000)
+    return () => clearTimeout(timer);
     }, [])
   
   return (
     <>
+
+    {pageShown ? 
+    
+      <SplashScreen /> 
+      :
+
     <div>
       <ToastContainer />
       <div className='main'>
@@ -93,6 +105,7 @@ const App = () => {
         <MobileNav />
       </div>
     </div>
+    }
     </>
   )
 }
