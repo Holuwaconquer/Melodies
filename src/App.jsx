@@ -27,30 +27,34 @@ const App = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   useEffect(() => {
     axios.get('https://api.audius.co/v1/tracks/trending')
-    .then((response) => {
-      setApiData(response.data.data || []);
-      setisLoading(false);
-    })
-    .catch((error) => {
-      console.error('Error fetching trending tracks:', error.message);
-      if(!errorShown){
-        if(error.message === 'Network Error'){
-          toast.error('There is a Network Error, pls check your internet connection!', {
-            hideProgressBar: true,
-            autoClose: 5000
-          })
-        }else{
-          toast.error('An error occured !')
+      .then((response) => {
+        const tracks = response.data.data.map(track => ({
+          ...track,
+          audioUrl: `https://api.audius.co/v1/tracks/${track.id}/stream`
+        }));
+        setApiData(tracks);
+        setisLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching trending tracks:', error.message);
+        if (!errorShown) {
+          if (error.message === 'Network Error') {
+            toast.error('There is a Network Error, pls check your internet connection!', {
+              hideProgressBar: true,
+              autoClose: 5000
+            });
+          } else {
+            toast.error('An error occurred!');
+          }
+          errorShown = true;
         }
-        errorShown = true
-      }
+      })
+      .finally(() => setisLoading(false));
 
-    })
-    .finally(() => setisLoading(false));
-
-    const timer = setTimeout(() => setpageShown(false), 3000)
+    const timer = setTimeout(() => setpageShown(false), 3000);
     return () => clearTimeout(timer);
-    }, [])
+  }, []);
+
   
   return (
     <>

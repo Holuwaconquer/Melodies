@@ -8,6 +8,7 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
   const [duration, setDuration] = useState(0);
   const [isRailVisible, setIsRailVisible] = useState(true);
   const [isBuffering, setIsBuffering] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   const showRail = () => setIsRailVisible(!isRailVisible);
 
@@ -56,7 +57,9 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
     const audio = audioRef.current;
     if (!audio) return;
 
-    const updateTime = () => setCurrentTime(audio.currentTime);
+    const updateTime = () => {
+      if (!isDragging) setCurrentTime(audio.currentTime);
+    };
     const updateDuration = () => setDuration(audio.duration || 0);
 
     audio.addEventListener('timeupdate', updateTime);
@@ -66,7 +69,7 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
       audio.removeEventListener('timeupdate', updateTime);
       audio.removeEventListener('loadedmetadata', updateDuration);
     };
-  }, [currentTrack]);
+  }, [currentTrack, isDragging]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -86,6 +89,20 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
     };
   }, [currentTrack]);
 
+  useEffect(() => {
+    if (isDragging) {
+      document.body.style.userSelect = 'none';
+      document.body.style.touchAction = 'none';
+    } else {
+      document.body.style.userSelect = 'auto';
+      document.body.style.touchAction = 'auto';
+    }
+    return () => {
+      document.body.style.userSelect = 'auto';
+      document.body.style.touchAction = 'auto';
+    };
+  }, [isDragging]);
+
   const formatTime = (s) => {
     const m = Math.floor(s / 60);
     const sec = Math.floor(s % 60);
@@ -104,6 +121,44 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
 
     audio.currentTime = seekTime;
     setCurrentTime(seekTime);
+  };
+
+  const handleDragStart = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+    attachListeners();
+  };
+
+  const handleDragMove = (e) => {
+    if (!isDragging || !progressBarRef.current || !audioRef.current) return;
+
+    const rect = progressBarRef.current.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const percentage = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1);
+    const newTime = percentage * duration;
+
+    setCurrentTime(newTime);
+  };
+
+  const handleDragEnd = () => {
+    if (!isDragging || !audioRef.current) return;
+    audioRef.current.currentTime = currentTime;
+    setIsDragging(false);
+    removeListeners();
+  };
+
+  const attachListeners = () => {
+    document.addEventListener('mousemove', handleDragMove);
+    document.addEventListener('mouseup', handleDragEnd);
+    document.addEventListener('touchmove', handleDragMove);
+    document.addEventListener('touchend', handleDragEnd);
+  };
+
+  const removeListeners = () => {
+    document.removeEventListener('mousemove', handleDragMove);
+    document.removeEventListener('mouseup', handleDragEnd);
+    document.removeEventListener('touchmove', handleDragMove);
+    document.removeEventListener('touchend', handleDragEnd);
   };
 
   const handleNext = () => {
@@ -148,11 +203,11 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
           </div>
 
           <div className="text-white text-center mb-2 px-4 flex justify-center items-center gap-4 text-2xl">
-            <button onClick={handlePrevious}>⏮</button>
-            <button onClick={() => setIsPlaying(prev => !prev)}>
+            <button className='cursor-pointer' onClick={handlePrevious}>⏮</button>
+            <button className='cursor-pointer' onClick={() => setIsPlaying(prev => !prev)}>
               {isPlaying ? '⏸' : '▶'}
             </button>
-            <button onClick={handleNext}>⏭</button>
+            <button className='cursor-pointer' onClick={handleNext}>⏭</button>
 
             {isBuffering && (
               <img
@@ -172,9 +227,22 @@ const AudioRail = ({ currentTrack, isPlaying, setIsPlaying, setCurrentTrack, tra
         <div
           ref={progressBarRef}
           onClick={handleSeek}
-          className="absolute top-0 left-0 w-full h-1 bg-[#0E9EEF] cursor-pointer overflow-hidden"
+          className="absolute top-0 left-0 w-full h-1 bg-[#0E9EEF] cursor-pointer"
         >
-          <div className="h-full bg-[white]" style={{ width: `${(currentTime / duration) * 100 || 0}%` }} />
+          <div
+            className="h-full bg-white"
+            style={{ width: `${(currentTime / duration) * 100 || 0}%` }}
+          />
+
+          <div
+            className="w-4 h-4 rounded-full bg-white absolute -top-1.5 cursor-pointer"
+            style={{
+              left: `calc(${(currentTime / duration) * 100 || 0}% - 6px)`,
+              transition: isDragging ? 'none' : 'left 0.1s linear',
+            }}
+            onMouseDown={handleDragStart}
+            onTouchStart={handleDragStart}
+          />
         </div>
 
         <div onClick={showRail}>
